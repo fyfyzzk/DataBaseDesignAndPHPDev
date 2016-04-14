@@ -4,28 +4,12 @@
     
     ini_set('display_errors', 'On');
 
-
-//print_r();
 require_once("config.php");
 require_once("hash.php");
 
 
 
-$db_host = "localhost"; //Host address (most likely localhost)
-$db_name = "LoginUserDB"; //Name of Database
-$db_user = "root"; //Name of database user
-$db_pass = "root"; //Password for database user
 
-$mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
-//GLOBAL $mysqli;
-
-if(mysqli_connect_errno()) {
-  echo "Connection Failed: " . mysqli_connect_errno();
-  exit();
-
-}else{
-  echo "Connection Successful";
-}
 
 echo "<br>";
 echo "<br>";
@@ -116,6 +100,34 @@ $mysqli->close();*/
 
     //echo "11111111111111111111111111111+++++".$mysqli;
 
+
+
+//global $mysqli;
+/*
+
+$db_host = "localhost"; //Host address (most likely localhost)
+$db_name = "LoginUserDB"; //Name of Database
+$db_user = "root"; //Name of database user
+$db_pass = "root"; //Password for database user
+
+$mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
+//
+
+if(mysqli_connect_errno()) {
+    echo "Connection Failed: " . mysqli_connect_errno();
+    exit();
+
+}else{
+    echo "Connection Successful";
+}*/
+
+
+GLOBAL $mysqli;
+
+    if (null == $mysqli){
+        printf("\n mysqli null !!\n");
+    }
+
     //Generate A random userid
     $character_array = array_merge(range(a, z), range(0, 9));
     $rand_string = "";
@@ -142,40 +154,9 @@ $mysqli->close();*/
     echo date('Y-m-d');
 
     $uniqueid = "123";
-//printf("\n  mysqli =    %x\n", $mysqli);
 
     $registrationdate = date('Y-m-d');
 
-
-/*$stmt = $mysqli->prepare(
-    "INSERT INTO FirstNameTable (
-        username
-		)
-		VALUES (
-		?
-		)"
-    );
-
-printf("\nstmt =    %x  Null = %x  \n", $stmt, NULL);*/
-
-/*
-firstname,
-lastname,
-uniqueid,
-		password,
-		confirmpassword,
-		email,
-		dateofbirth,
-		registrationdate
-
-        ?,
-        ?,
-        ?,
-		?,
-		?,
-		?
-
-*/
 
 
     $stmt = $mysqli->prepare(
@@ -183,7 +164,6 @@ uniqueid,
         username,
         firstname,
         lastname,
-        uniqueid,
 		password,
 		email,
 		dateofbirth,
@@ -196,36 +176,13 @@ uniqueid,
 		?,
 		?,
 		?,
-		?,
-		?,
-		".date("Y-m-d")."
+        ?
 		)"
     );
-
-/*
- *
- * 		VALUES (
-		?,
-		?,
-		?,
-		'" . $rand_string . "',
-		'" . $hashpassword . "',
-		'" . $hashpassword . "',
-		?,
-		?,
-		'" . date('Y-m-d') . "'
-		)"
-    )
- *
- *
- * */
-
-
-
-//'" . date('Y-m-d') . "',
     printf("\n  stmt =    %x  Null = %x  \n", $stmt, NULL);
-
-    $result = $stmt->bind_param("ssssssss", $username, $firstname, $lastname, $password, $email, $dateofbirth, $registrationdate, $uniqueid);
+//".date("Y-m-d")."
+    $result = $stmt->bind_param("sssssss", $username, $firstname, $lastname,
+                            $password, $email, $dateofbirth, $registrationdate);
 
     echo "bind_param".$result;
 
