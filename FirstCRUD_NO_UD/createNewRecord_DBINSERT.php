@@ -1,0 +1,49 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: PraviinM
+ */
+
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
+require_once("config.php");
+
+// Assigning $_POST values to individual variables for reuse.
+$fname = $_POST['firstname'];
+$lname = $_POST['lastname'];
+$city = $_POST['city'];
+$zip = $_POST['zip'];
+$dob = $_POST['dateofbirth'];
+$email = $_POST['emailaddress'];
+
+
+print $fname;
+echo "<br>";
+print $lname;
+echo "<br>";
+print $city;
+echo "<br>";
+print $zip;
+echo "<br>";
+print $dob;
+echo "<br>";
+print $email;
+
+
+
+//Creating a variable to hold the "@return boolean value returned by function createNewUser - is boolean 1 with
+//successfull and 0 when there is an error with executing the query .
+
+
+$allrecords = fetchAllUsers(); // calling the function from functions.php //
+
+
+
+$newuser = createNewUser($fname, $lname, $dob, $email, $city, $zip);
+
+//display the result that was returned by the createNewUser function - in this case we usually get a 1 when the
+//insert is completed successfully.
+echo $newuser;
+?>

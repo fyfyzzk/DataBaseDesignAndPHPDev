@@ -1,0 +1,106 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: zzk
+ * Date: 2/7/16
+ * Time: 2:17 PM
+ */
+
+?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <title>
+        Gas Buddy
+    </title>
+    <!-- Style -- Can also be included as a file usually style.css -->
+    <style type="text/css">
+        table.table-style-three {
+            font-family: verdana, arial, sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #3A3A3A;
+            border-collapse: collapse;
+        }
+        table.table-style-three th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #FFA6A6;
+            background-color: #D56A6A;
+            color: #ffffff;
+        }
+        table.table-style-three a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        table.table-style-three tr:hover td {
+            cursor: pointer;
+        }
+        table.table-style-three tr:nth-child(even) td{
+            background-color: #F7CFCF;
+        }
+        table.table-style-three td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #FFA6A6;
+            background-color: #ffffff;
+        }
+    </style>
+
+</head>
+<body>
+
+<?php require_once("config.php");
+
+$thisZipCode = $_POST['zipcode'];
+
+echo "ZipCode ==".$thisZipCode;
+
+$allrecords = fetchByZip($thisZipCode);
+echo "<pre>";
+print_r($allrecords);
+echo "</pre>";
+
+?>
+
+<!-- Table goes in the document BODY -->
+<table class="table-style-three">
+    <thead>
+    <!-- display user details header  -->
+    <th>ID</th>
+    <th>Station Name</th>
+    <th>Address</th>
+    <th>Zip Code</th>
+    <th>Gas Type1</th>
+    <th>Gas Price1</th>
+    <th>Gas Type2</th>
+    <th>Gas Price2</th>
+    <th>Gas Type3</th>
+    <th>Gas Price3</th>
+    </thead>
+    <tbody>
+    <?php
+    foreach($allrecords as $displayRecords) { ?>
+        <tr>
+            <td><a href="updateThisUser.php?id=<?php print $displayRecords['id']; ?>"><?php print $displayRecords['id']; ?></a></td>
+            <td><?php print $displayRecords['stationname']; ?></td>
+            <td><?php print $displayRecords['address']; ?></td>
+            <td><?php print $displayRecords['zipcode']; ?></td>
+            <td><?php print $displayRecords['gastype1']; ?></td>
+            <td><?php print $displayRecords['gasprice1']; ?></td>
+            <td><?php print $displayRecords['gastype2']; ?></td>
+            <td><?php print $displayRecords['gasprice2']; ?></td>
+            <td><?php print $displayRecords['gastype3']; ?></td>
+            <td><?php print $displayRecords['gasprice3']; ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>
+
+</body>
+</html>
