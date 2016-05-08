@@ -2,7 +2,6 @@
 
 require_once("config.php");
 
-
 //Prevent the user visiting the logged in page if he/she is already logged in
 if(isUserLoggedIn()) { header("Location: myaccount.php"); die(); }
 
@@ -38,8 +37,8 @@ if(!empty($_POST))
 			{
 				//Hash the password and use the salt from the database to compare the password.
 				$entered_pass = generateHash($password,$userdetails["Password"]);
-			  	echo $entered_pass . "<br><br>";
-			  	echo $userdetails['Password'];
+			  	//echo $entered_pass . "<br><br>";
+			  	//echo $userdetails['Password'];
 
 				
 				if($entered_pass != $userdetails["Password"])
@@ -59,15 +58,27 @@ if(!empty($_POST))
 				    $loggedInUser->last_name = $userdetails["LastName"];
 					$loggedInUser->username = $userdetails["UserName"];
 				  	$loggedInUser->member_since = $userdetails["MemberSince"];
-
+					$loggedInUser->permission = $userdetails["Permission"];
 					//pass the values of $loggedInUser into the session -
 				  	// you can directly pass the values into the array as well.
 
+
+					//echo "login.php  permission = ".$loggedInUser->permission;
+
 					$_SESSION["ThisUser"] = $loggedInUser;
+
+
+					//echo "require_once  header.php  come here 11111 ";
 
 				  	//now that a session for this user is created
 					//Redirect to this users account page
 					header("Location: myaccount.php");
+
+
+
+					//echo "require_once  header.php  come here 12345 ";
+
+
 					die();
 				}
 			}
@@ -75,7 +86,17 @@ if(!empty($_POST))
 	}
 }
 
+
+
+//echo "require_once  header.php  come here before ";
 require_once("header.php");
+
+
+
+
+
+echo "require_once  header.php  come here ";
+
 
 echo "
 <body>

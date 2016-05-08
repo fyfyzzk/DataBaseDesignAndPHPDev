@@ -113,7 +113,8 @@ function fetchUserDetails($username)
 		Email,
 		Password,
 		MemberSince,
-		Active
+		Active,
+		Permission
 		FROM ".$db_table_prefix."UserDetails
 		WHERE
 		UserName = ?
@@ -121,7 +122,7 @@ function fetchUserDetails($username)
   $stmt->bind_param("s", $username);
 
   $stmt->execute();
-  $stmt->bind_result($UserID, $UserName, $FirstName, $LastName, $Email, $Password, $MemberSince, $Active);
+  $stmt->bind_result($UserID, $UserName, $FirstName, $LastName, $Email, $Password, $MemberSince, $Active, $Permission);
   while ($stmt->fetch()){
     $row = array('UserID' => $UserID,
                  'UserName' => $UserName,
@@ -130,7 +131,8 @@ function fetchUserDetails($username)
                  'Email' => $Email,
                  'Password' => $Password,
                  'MemberSince' => $MemberSince,
-                 'Active' => $Active);
+                 'Active' => $Active,
+                 'Permission' => $Permission);
   }
   $stmt->close();
   return ($row);
@@ -181,7 +183,7 @@ function fetchUserPermission()
 //Check if a user is logged in
 function isUserLoggedIn()
 {
-  echo "isUserLoggedIn come here!";
+  //echo "isUserLoggedIn come here!";
 
 
   global $loggedInUser,$mysqli,$db_table_prefix;
@@ -211,13 +213,13 @@ function isUserLoggedIn()
     if ($num_returns > 0)
     {
 
-      echo "isUserLoggedIn     11111111";
+      //echo "isUserLoggedIn     11111111";
 
       return true;
     }
     else
     {
-      echo "isUserLoggedIn     22222222";
+      //echo "isUserLoggedIn     22222222";
 
 
       destroySession("ThisUser");
